@@ -2,6 +2,7 @@
 <html>
 <head>
 <title> Conjuntos en PHP </title>
+<h2> Producto de matrices en PHP </h2>
 </head>
 
 <body>
@@ -9,9 +10,9 @@
 <br>Ingrese el tamanio del conjunto A: </br>
 <form action="actividad2.php" method="post">
 <input type="number" name="conjuntoA">
-<br></br>
 <br>Ingrese el tamanio del conjunto B: </br>
 <input type="number" name="conjuntoB">
+<br></br>
 <input type="submit" value="Enviar">
 </form> 
 
@@ -30,35 +31,39 @@ class Conjunto{
         $this->tam = $tam;
         $this->id = $id;
     } 
-
     public function rellenarConjunto(){
         for($i=0; $i<$this->tam; $i++){
             $this->Arreglo[$i] = rand(0,20);
         }
     }
     public function ImprimirValores(){
+        echo "Conjunto [".$this->id."]:";
         echo ('<pre>');
         print_r ($this->Arreglo);
-        echo ('</pre>');
+        echo ('</pre>')."<br>";
     }
     public function Limpiar(){
         $Aux = array_unique($this->Arreglo);
-        $this->Arreglo = $Aux;
+        $this->Arreglo = "";
+        for($i=0;$i<sizeof($Aux);$i++){
+            $this->Arreglo[$i] = $Aux[$i];
+        }
     }
-
     public function Union($Auxiliar){
-         $Resultante = array_merge($this->Arreglo, $Auxiliar->Arreglo);
+         $Res = array_merge($this->Arreglo, $Auxiliar->Arreglo);
+         $Resultante = array_unique($Res);
          return $Resultante;
     }
     public function Interseccion($Auxiliar){
-        $Resultante = array_intersect($this->Arreglo, $Auxiliar->Arreglo);
+        $Res = array_intersect($this->Arreglo, $Auxiliar->Arreglo);
+        $Resultante = array_unique($Res);
         return $Resultante;
     }
     public function Diferencia($Auxiliar){
-        $Resultante = array_diff($this->Arreglo, $Auxiliar->Arreglo);
+        $Res = array_diff($this->Arreglo, $Auxiliar->Arreglo);
+        $Resultante = array_unique($Res);
         return $Resultante;
     }
-
 }
 
 $ConjuntoA = new Conjunto($A,'A');
@@ -68,8 +73,9 @@ $ConjuntoD = new Conjunto(0,'D');
 $ConjuntoE = new COnjunto(0,'E');
 
 $ConjuntoA->rellenarConjunto();
-$ConjuntoB->rellenarConjunto();
 $ConjuntoA->ImprimirValores();
+
+$ConjuntoB->rellenarConjunto();
 $ConjuntoB->ImprimirValores();
 
 $ConjuntoC->Arreglo = $ConjuntoA->Union($ConjuntoB);
