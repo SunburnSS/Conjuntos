@@ -21,8 +21,8 @@ $A=$_POST['conjuntoA'];
 $B=$_POST['conjuntoB'];
 
 class Conjunto{
-    private $tam;
-    private $Arreglo = array();
+    public $tam;
+    public $Arreglo = array();
 
     public function __construct($tam){
         $this->tam = $tam;
@@ -30,14 +30,26 @@ class Conjunto{
 
     public function rellenarConjunto(){
         for($i=0; $i<$this->tam; $i++){
-            $Arreglo[$i] = rand(0,20);
-            echo $Arreglo[$i];
+            $this->Arreglo[$i] = rand(0,20);
         }
+    }
+    public function ImprimirValores(){
+        for($i=0; $i<sizeof($this->Arreglo); $i++){
+            echo $this->Arreglo[$i]." ";
+        }
+    }
+    public function Limpiar(){
+        $Aux = array_unique($this->Arreglo);
+        $this->Arreglo = $Aux;
     }
 }
 
 $conjuntin = new Conjunto($A);
 $conjuntin->rellenarConjunto();
+$conjuntin->ImprimirValores();
+echo 'Soy una línea.\n';
+$conjuntin->Limpiar($conjuntin);
+$conjuntin->ImprimirValores();
 
 ?>
 </body>
